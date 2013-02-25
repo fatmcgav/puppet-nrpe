@@ -4,14 +4,14 @@ class nrpe::install (
 ) inherits nrpe::params {
 
   package { $nrpe_package:
-    ensure  => installed,
+    ensure  => latest,
   }
   #package { $nrpe::params::nrpe_check_package:
   #  ensure  => installed,
   #}
 
   package {$plugin_package:
-    ensure => installed
+    ensure => latest
   }
 
   /*
