@@ -1,14 +1,20 @@
-class nrpe::install {
+class nrpe::install (
+  $nrpe_package   = $nrpe::params::nrpe_package,
+  $plugin_package = $nrpe::params::nrpe_plugins
+) inherits nrpe::params {
 
-  include nrpe::params
-
-  package { $nrpe::params::nrpe_package:
+  package { $nrpe_package:
     ensure  => installed,
   }
-  package { $nrpe::params::nrpe_check_package:
-    ensure  => installed,
+  #package { $nrpe::params::nrpe_check_package:
+  #  ensure  => installed,
+  #}
+
+  package {$plugin_package:
+    ensure => installed
   }
 
+  /*
   case $operatingsystem {
     centos,redhat,fedora: {
       package { ["nagios-plugins-http","nagios-plugins-tcp", "nagios-plugins-sensors", "nagios-plugins-time", "nagios-plugins-dig", "nagios-plugins-rpc", "nagios-plugins-dns","nagios-plugins-ups", "nagios-plugins-ldap", "nagios-plugins-nagios", "nagios-plugins-smtp"]: ensure => installed }
@@ -19,5 +25,6 @@ class nrpe::install {
       package { ["nagios-plugins-extra","nagios-plugins-basic","nagios-plugins-standard", "nagios-plugins"]: ensure => installed }
     }
   }
+  */
 
 }

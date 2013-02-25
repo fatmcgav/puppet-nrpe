@@ -1,14 +1,22 @@
 class nrpe::params (
-  $user = 'nrpe',
-  $group = 'nrpe',
-  $port = 5666,
+  $user            = 'nrpe',
+  $group           = 'nrpe',
+  $port            = 5666,
   $nagios_ips, # comma separated list of ips that can talk to nrpe
   $command_timeout = 180,
-  $firewall = false, ## disabling this for now
+  $command_args    = true, # Allow command line args
+  $firewall        = false, ## disabling this for now
 )
 {
-  $nagios_plugins = $architecture ? { 'x86_64' => '/usr/lib64/nagios/plugins', default => '/usr/lib/nagios/plugins'}
+  # ACT config settings
+  $nrpe_cfg = '/usr/local/nagios/etc/nrpe.cfg'
+  $nrpe_include_dir = '/usr/local/nagios/etc/nrpe.d'
+  $nagios_plugins = '/usr/local/nagios/libexec'
   $nagios_extra_plugins = hiera('monitoring::nagios_extra_plugins', undef)
+  $nrpe_package = 'act-nrpe'
+  $nrpe_plugins = 'act-nagios-plugins'
+  $nrpe_pid_file = '/var/run/nrpe.pid'
+  
   case $lsbdistdescription {
     ## some tricky logic to use systemd on fedora 17+
     /Fedora release (.+)/: {
@@ -26,6 +34,8 @@ class nrpe::params (
       $nrpe_provider = undef
     }
   }
+  
+  /*
   case $operatingsystem {
     default: {
       $nrpe_package = 'nrpe'
@@ -40,4 +50,7 @@ class nrpe::params (
       $pid_file = '/var/run/nagios/nrpe.pid'
     }
   }
+  
+  */
+  
 }
