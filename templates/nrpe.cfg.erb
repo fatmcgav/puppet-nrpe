@@ -50,7 +50,7 @@ nrpe_group=<%= group %>
 #
 # NOTE: This option is ignored if NRPE is running under either inetd or xinetd
 
-allowed_hosts=127.0.0.1,<%= nagios_ips %>
+allowed_hosts=127.0.0.1<% nagios_ips.each do |nagios_ip| -%>,<%= nagios_ip %><% end -%>
 
 # COMMAND ARGUMENT PROCESSING
 # This option determines whether or not the NRPE daemon will allow clients
@@ -132,10 +132,10 @@ connection_timeout=300
 
 # Standard check commands
 command[check_load]=/usr/local/nagios/libexec/check_load -w 15,10,5 -c 30,25,20
-command[check_mem]=/usr/local/nagios/libexec/check_mem.pl -w $ARG1$ -c $ARG2$
+command[check_mem]=/usr/local/nagios/libexec/check_mem -w $ARG1$ -c $ARG2$
 command[check_disk]=/usr/local/nagios/libexec/check_disk -w $ARG1$ -c $ARG2$ -p $ARG3$
 command[check_procs]=/usr/local/nagios/libexec/check_procs -w $ARG1$ -c $ARG2$ -s $ARG3$
-command[check_network]=/usr/local/nagios/libexec/check_networkload -p $ARG2$
+command[check_network]=/usr/local/nagios/libexec/check_networkload -i $ARG1$ -p $ARG2$
 command[check_iostat]=/usr/local/nagios/libexec/check_iostat -d $ARG1$ -dbu -dbuw $ARG2$ -dbuc $ARG3$ -p
 
 
