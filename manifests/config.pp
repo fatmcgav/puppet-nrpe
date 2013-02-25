@@ -23,7 +23,7 @@ class nrpe::config (
   }
 
   # NRPE include dir
-  file { 'nrpeinclude':
+  file { 'nrpeincludedir':
     path   => $nrpe_include_dir,
     ensure => directory,
     owner  => $user,
