@@ -30,6 +30,7 @@ define nrpe::plugin (
   $ensure               = 'present',  
   $file                 = undef,
   $template             = undef,
+  $plugin_location      = 'main',
   $plugin_type          = 'file',
   $sudo                 = false,
   $user                 = $nrpe::params::user,
